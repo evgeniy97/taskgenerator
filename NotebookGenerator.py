@@ -46,6 +46,12 @@ def create_cell(content, type='c', nbtype=''):
     cell['source'] = content
     return cell
 
+def cells_query(source_list):
+    cell_list = []
+    for s in source_list:
+        cell_list.append(create_cell(s[0], s[1]))
+    return  cell_list
+
 if __name__ == '__main__':
     #jupyter_notebook['cells'].append(copy(cell_code))
     #jupyter_notebook['cells'].append(copy(cell_markdown))
@@ -55,8 +61,13 @@ if __name__ == '__main__':
     #jupyter_notebook['cells'][0]['source'] = ['print("Hello word!")']
     #jupyter_notebook['cells'][1]['source'] = [r'$\frac{1}{2}$']
     #jupyter_notebook['cells'][2]['source'] = ["# Not russian"]
-    cells = []
-    cells.append(create_cell('print("HELP ME")'))
-    cells.append(create_cell('Hi',type='m'))
+
+    #cells = []
+    #cells.append(create_cell('print("HELP ME")'))
+    #cells.append(create_cell('Hi', type='m'))
+    cells = cells_query([['print("Hi")\n'
+    'print("Hi klgj kjhhjb")\n'
+    'print("Hi")\n'
+    'print("Hi klgj kjhhjb")', 'c'],['Hi','m']])
     create_notebook(cell_list=cells)
 
