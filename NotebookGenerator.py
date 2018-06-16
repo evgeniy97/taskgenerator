@@ -26,7 +26,7 @@ def create_notebook(notebook_name="test.ipynb", cell_list=[copy(cell_code)], pat
     :return:
     """
     jupyter_notebook['cells'] = cell_list
-    with open(notebook_name, 'w') as file:
+    with open(notebook_name, 'w', encoding="utf8") as file:
         s = json.dumps(jupyter_notebook, indent=2, ensure_ascii=False)
         file.write(s)
 
