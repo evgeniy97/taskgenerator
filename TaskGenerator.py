@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 import NotebookGenerator
-
+import os
 
 def CreateTask(week_number=1, student_with_variants_path='StudentsWithVariants.xlsx',
                 notebook_structure_path='Course/notebookstructure/',
@@ -13,6 +13,8 @@ def CreateTask(week_number=1, student_with_variants_path='StudentsWithVariants.x
     task_path = week_path + '/task{}.json'
     output_path = 'NoteBooks/week{}'.format(week_number)
 
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
     # Load all stuff
 
     Students = pd.read_excel(student_with_variants_path)
