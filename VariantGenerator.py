@@ -20,8 +20,8 @@ def GenerateVariantsDistribution(random_seed_parametr = 0,student_path = 'studen
 
     number_of_distribution = 0
     for WeakNumber in range(Number_of_weaks):
-        for TaskNumber in range(1, Course_structure[WeakNumber] + 1):
-            Students['Weak {0} Task {1} '.format(WeakNumber + 1, TaskNumber)] = np.random.randint(
+        for TaskNumber in range(Course_structure[WeakNumber]):
+            Students['Week {0} Task {1}'.format(WeakNumber, TaskNumber + 1)] = np.random.randint(
                 variants_numbers[number_of_distribution], size=students_number)
             number_of_distribution += 1
 

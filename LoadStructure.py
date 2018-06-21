@@ -21,19 +21,20 @@ def load_structure(course_directory):
         task_directory = os.path.join(course_directory, d) 
         file_names = [os.path.join(task_directory, f) 
                       for f in os.listdir(task_directory) 
-                      if f.endswith(".json")] 
+                      if 'task' in f]
+                      # if f.endswith(".json")]  # Здесь надо считать только таск
         tasks_num.append(len(file_names))
         for f in file_names:
             var_num.append(count_var(f))
     return tasks_num, var_num
 
-CURR_PATH = os.curdir
-COURSE_PATH = "Course"
-COURSE_PATH = os.path.join(CURR_PATH, COURSE_PATH)
-str1, str2 = load_structure(COURSE_PATH)
-str1 = ' '.join(str(i) for i in str1)
-str2 = ' '.join(str(i) for i in str2)
-with open("structure.txt", 'w', encoding="utf8") as output_file:
-    output_file.write(str1 + '\n' + str2)
+def generate_stracture(COURSE_PATH = "Course"):
+    CURR_PATH = os.curdir
+    COURSE_PATH = os.path.join(CURR_PATH, COURSE_PATH)
+    str1, str2 = load_structure(COURSE_PATH)
+    str1 = ' '.join(str(i) for i in str1)
+    str2 = ' '.join(str(i) for i in str2)
+    with open("structure.txt", 'w', encoding="utf8") as output_file:
+        output_file.write(str1 + '\n' + str2)
 
 
