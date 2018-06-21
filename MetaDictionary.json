@@ -1,0 +1,42 @@
+{
+"None": {},
+"ReadOnly": {
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "ReadOnly",
+     "locked": true,
+     "schema_version": 1,
+     "solution": false
+    }
+  },
+"AutograderAnswer":{
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "AutograderAnswer",
+     "locked": false,
+     "schema_version": 1,
+     "solution": true
+    }
+  },
+  "ManuallyGradedAnswer":{
+    "nbgrader": {
+     "grade": true,
+     "grade_id": "ManuallyGradedAnswer",
+     "locked": false,
+     "points": "{}",
+     "schema_version": 1,
+     "solution": true
+    }
+  },
+  "AutoGraderTests":{
+    "nbgrader": {
+     "grade": true,
+     "grade_id": "AutoGraderTests",
+     "locked": true,
+     "points": "{}",
+     "schema_version": 1,
+     "solution": false
+    }
+   }
+
+}

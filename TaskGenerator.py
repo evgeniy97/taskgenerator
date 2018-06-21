@@ -5,8 +5,12 @@ import os
 
 def CreateTask(week_number=1, student_with_variants_path='StudentsWithVariants.xlsx',
                 notebook_structure_path='Course/notebookstructure/',
-                week_path='Course/week{}'):
+                week_path='Course/week{}',
+               use_nbdrader_mode = True
+               ):
     # Define all paths
+
+
     week_path = week_path.format(week_number)
     head_path = week_path + '/head.json'
     theory_path = week_path + '/theory.json'
@@ -30,7 +34,7 @@ def CreateTask(week_number=1, student_with_variants_path='StudentsWithVariants.x
                 data = data_task[str(student[1]['Weak 1 Task 1 '])]
 
                 for data_cell in data:
-                    cells_source.append([data_cell[0], data_cell[1]])
+                    cells_source.append([data_cell[0], data_cell[1], data_cell[2]])
 
             elif cell[0] == 'Head':
                 with open(head_path, 'r', encoding="utf8") as json_file:
@@ -40,7 +44,8 @@ def CreateTask(week_number=1, student_with_variants_path='StudentsWithVariants.x
 
                 for data_cell in data_task:
                     # Первое текст, второе тип - мы идем по ключам словаря. format - чтобы добавить имя
-                    cells_source.append([data_task[data_cell][0].format(student[1]['Student']), data_task[data_cell][1]])
+                    cells_source.append(
+                        [data_task[data_cell][0].format(student[1]['Student']), data_task[data_cell][1],data_task[data_cell][2]])
 
 
             elif cell[0] == 'Th':
@@ -49,7 +54,7 @@ def CreateTask(week_number=1, student_with_variants_path='StudentsWithVariants.x
                 data = data_task[cell[2]] # Получили номер необходимой нам теории
                 #print(data)
                 for data_cell in data:
-                    cells_source.append([data_cell[0], data_cell[1]])
+                    cells_source.append([data_cell[0], data_cell[1], data_cell[2]])
                 #cells_source.append([data, 'm'])
 
         cells_to_write = NotebookGenerator.cells_query(cells_source)
