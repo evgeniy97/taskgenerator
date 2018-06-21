@@ -4,7 +4,7 @@ import NotebookGenerator
 import os
 
 def CreateTask(week_number=1, student_with_variants_path='StudentsWithVariants.xlsx',
-                notebook_structure_path='Course/notebookstructure/',
+                notebook_structure_path='notebookstructure/',
                 week_path='Course/week{}',
                use_nbdrader_mode = True
                ):
@@ -31,7 +31,7 @@ def CreateTask(week_number=1, student_with_variants_path='StudentsWithVariants.x
             if cell[0] == 'Task':
                 with open(task_path.format(cell[2]), 'r', encoding="utf8") as json_file:
                     data_task = json.load(json_file)
-                data = data_task[str(student[1]['Weak 1 Task 1 '])]
+                data = data_task[str(student[1]['Week {0} Task {1}'.format(cell[1],cell[2])])]
 
                 for data_cell in data:
                     cells_source.append([data_cell[0], data_cell[1], data_cell[2]])
