@@ -1,10 +1,11 @@
 import pandas as pd
 import json
-import NotebookGenerator
 import os
 
+from NotebookGenerator import NotebookGenerator
 from settings import variantsFile, notebookStructureDir, weekPath, nbgraderState
 from settings import headFile, theoryFile, taskFile, outputFile
+
 
 class TaskGenerator:
     def __init__(self, week_number=1, use_nbgrader_mode=nbgraderState):
@@ -25,7 +26,8 @@ class TaskGenerator:
     def read_cells(self):
         if not os.path.isfile(self.week_structure_path):
             print("\nWeek structure is not exists or wrong\n")
-            return list()
+            exit(2)
+            #return list()
         with open(self.week_structure_path, encoding="utf8") as file:
             cells = [line.replace('\n', '').split() for line in file.readlines()]
             return cells
@@ -33,7 +35,8 @@ class TaskGenerator:
     def read_data(self, path):
         if not os.path.isfile(path):
             print("%s is empty or wrong\n" % path)
-            return list()
+            exit(2)
+            #return list()
         with open(path, 'r', encoding="utf8") as json_file:
             data_task = json.load(json_file)
             return data_task
@@ -88,9 +91,10 @@ class TaskGenerator:
                     source = list()
                 cells_source += source
 
-            cells_to_write = NotebookGenerator.cells_query(cells_source)
+            nb_generator = NotebookGenerator()
+            cells_to_write = nb_generator.cells_query(cells_source)
             student_path = self.output_path + '/{0}_week{1}.ipynb'.format(student[1]['Student'], self.week_number)
-            NotebookGenerator.create_notebook(notebook_name=student_path, cell_list=cells_to_write)
+            nb_generator.create_notebook(notebook_name=student_path, cell_list=cells_to_write)
         print('Done!')
 
 
