@@ -44,7 +44,7 @@ class TaskGenerator:
     def parse_theory_cell(self, cell):
         theory_source = []
         data_task = self.read_data(self.theory_path)
-        data = data_task[cell[2]]  # Получили номер необходимой нам теории
+        data = data_task[cell[1]]  # Получили номер необходимой нам теории
         # print(data)
         for data_cell in data:
             theory_source.append([data_cell[0], data_cell[1], data_cell[2]])
@@ -54,8 +54,8 @@ class TaskGenerator:
 
     def parse_task_cell(self, cell, student):
         task_source = []
-        data_task = self.read_data(self.task_path.format(cell[2]))
-        data = data_task[str(student[1]['Week {0} Task {1}'.format(cell[1], cell[2])])]
+        data_task = self.read_data(self.task_path.format(cell[1]))
+        data = data_task[str(student[1]['Week {0} Task {1}'.format(self.week_number, cell[1])])]
         for data_cell in data:
             task_source.append([data_cell[0], data_cell[1], data_cell[2]])
         return task_source

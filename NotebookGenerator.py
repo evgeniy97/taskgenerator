@@ -62,7 +62,7 @@ class NotebookGenerator:
             MetaDictionary = json.load(json_file)
         return MetaDictionary[nbtype]
 
-    def create_cell(self, content, type='c', nbtype='None'):
+    def create_cell(self, content, cell_type='c', nbtype='None'):
         """
         create cell according type and nbgrader type with content
         :param content:
@@ -70,9 +70,9 @@ class NotebookGenerator:
                nbtype: тип ячейки в метаданных nbgrader
         :return: cell
         """
-        if type == 'c':
+        if cell_type == 'c':
             cell = copy(self.cell_code)
-        elif type == 'm':
+        elif cell_type == 'm':
             cell = copy(self.cell_markdown)
         else:
             print("\nCell type error\n")
