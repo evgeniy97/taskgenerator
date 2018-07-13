@@ -75,6 +75,7 @@ class NotebookGenerator:
         elif cell_type == 'm':
             cell = copy(self.cell_markdown)
         else:
+            print(cell_type)
             print("\nCell type error\n")
             cell = None
             exit(3)
