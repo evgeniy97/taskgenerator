@@ -28,7 +28,7 @@ def load_structure(course_directory):
             var_num.append(count_var(f))
     return tasks_num, var_num
 
-def generate_stracture(COURSE_PATH = "Course"):
+def old_generate_stracture(COURSE_PATH = "Course"):
     CURR_PATH = os.curdir
     COURSE_PATH = os.path.join(CURR_PATH, COURSE_PATH)
     str1, str2 = load_structure(COURSE_PATH)
@@ -37,4 +37,23 @@ def generate_stracture(COURSE_PATH = "Course"):
     with open("structure.txt", 'w', encoding="utf8") as output_file:
         output_file.write(str1 + '\n' + str2)
 
+def generate_stracture(COURSE_PATH = ''):
 
+    ## TODO Импортить питоновские файлы грамотно, сделать цикл по всем бд-питоновским файлам
+
+    from BaseNotebooks.LR2DB import Tasks_db ## Это слабый момент
+    tasks_num = []
+    var_num = []
+    tasks_num.append(len(Tasks_db))
+
+    for task_key in Tasks_db.keys():
+        var_num.append(len(Tasks_db[task_key]))
+
+    str1 = ' '.join(str(i) for i in tasks_num)
+    str2 = ' '.join(str(i) for i in var_num)
+
+    with open("structure.txt", 'w', encoding="utf8") as output_file:
+        output_file.write(str1 + '\n' + str2)
+
+
+generate_stracture()
