@@ -28,28 +28,34 @@ class VariantGenerator:
             new_data = copy(base_data)
         return new_data
 
+    def change_cell(self, cell, student):
+        new_cell = []
+        for line in cell['source']:
+            position_variant = line.find("TASK_VARIANT")
+            if position_variant != -1:
+                current_task = line[position_variant - 2]
+                current_variant = str(student[1]['Week {0} Task {1}'.format(self.week_number, current_task)])
+                # если нет такого ключа
+                self.task_variants["Task" + str(current_task)][int(current_variant)]['f_latex'] = latex(
+                    self.task_variants["Task" + str(current_task)][int(current_variant)]['f'](x))
+                new_cell.append(line.replace("TASK_VARIANT", current_variant).format(**self.task_variants))
+            else:
+                new_cell.append(line)
+        return new_cell
+
+    def add_latex(self, current_task, current_variant):
+        self.task_variants["Task" + str(current_task)][int(current_variant)]['f_latex'] = latex(
+            self.task_variants["Task" + str(current_task)][int(current_variant)]['f'](x))
+
     def insert_tasks(self):
         students = pd.read_excel(self.variants_path)
-        new_notebook = []
         for student in students.iterrows():
             #new_notebook = copy(base_notebook)
             new_notebook = self.read_base_notebook()
             for i, cell in enumerate(new_notebook['cells']):
-                new_cell = []
-                for line in cell['source']:
-                    position_variant = line.find("TASK_VARIANT")
-                    if position_variant != -1:
-                        current_task = line[position_variant - 2]
-                        current_variant = str(student[1]['Week {0} Task {1}'.format(self.week_number, current_task)])
-                        # если нет такого ключа
-                        self.task_variants["Task"+str(current_task)][int(current_variant)]['f_latex'] = latex(self.task_variants["Task"+str(current_task)][int(current_variant)]['f'](x))
-                        new_cell.append(line.replace("TASK_VARIANT", current_variant).format(**self.task_variants))
-                    else:
-                        new_cell.append(line)
-                new_notebook['cells'][i]['source'] = new_cell # можно делать это только для тех ячеек где происходят изменения
+                new_notebook['cells'][i]['source'] = self.change_cell(cell, student) # можно делать это только для тех ячеек где происходят изменения
             student_path = self.output_path + '/{0}_week{1}.ipynb'.format(student[1]['Student'], self.week_number)
             self.create_notebook(new_notebook, student_path)
-        return new_notebook
 
     def create_notebook(self, new_notebook, notebook_path="test.ipynb"):
         if not os.path.isfile(notebook_path):
