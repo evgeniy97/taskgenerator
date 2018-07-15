@@ -60,6 +60,8 @@ def __GenerateVariantsDistribution(
         writer = pd.ExcelWriter(students_with_variants_path)
         Students.to_excel(writer)
         writer.save()
+
+        # TODO Удалять файл structure.txt
     except:
         print('File with students doesnot exist')
 
@@ -92,7 +94,7 @@ def SortByName(students_with_variants_path='StudentsWithVariants.xlsx'):
     except:
         print('No Students_with_variants file')
         return None
-    
+
 def GenerateVariantsDistribution(list_disrtibution, random_seed_parametr=0, student_path='students.xlsx',
                                  students_with_variants_path='StudentsWithVariants.xlsx' ):
     """

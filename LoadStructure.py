@@ -41,13 +41,14 @@ def generate_stracture(COURSE_PATH = ''):
 
     ## TODO Импортить питоновские файлы грамотно, сделать цикл по всем бд-питоновским файлам
 
-    from BaseNotebooks.LR2DB import Tasks_db ## Это слабый момент
+    from BaseNotebooks.All_LR import Tasks_db
     tasks_num = []
     var_num = []
-    tasks_num.append(len(Tasks_db))
 
-    for task_key in Tasks_db.keys():
-        var_num.append(len(Tasks_db[task_key]))
+    for week in Tasks_db:
+        tasks_num.append(len(week))
+        for task_key in week.keys():
+            var_num.append((len(week[task_key])))
 
     str1 = ' '.join(str(i) for i in tasks_num)
     str2 = ' '.join(str(i) for i in var_num)
