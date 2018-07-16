@@ -2,8 +2,8 @@ import os
 import numpy as np
 import json
 
+
 def count_var(f):
-    var_num = 0
     with open(f, 'r', encoding="utf8") as json_file:
         data_tasks = json.load(json_file)
     var_num = len(data_tasks)
