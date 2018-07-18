@@ -1,6 +1,27 @@
 import numpy as np
 import pandas as pd
 
+def generate_stracture(COURSE_PATH = ''):
+
+    ## TODO Импортить питоновские файлы грамотно, сделать цикл по всем бд-питоновским файлам
+
+    from BaseNotebooks.All_LR import Tasks_db
+    tasks_num = []
+    var_num = []
+
+    for week in Tasks_db:
+        tasks_num.append(len(week))
+        for task_key in week.keys():
+            var_num.append((len(week[task_key])))
+
+    return  tasks_num, var_num
+
+    #str1 = ' '.join(str(i) for i in tasks_num)
+    #str2 = ' '.join(str(i) for i in var_num)
+
+    #with open("structure.txt", 'w', encoding="utf8") as output_file:
+    #    output_file.write(str1 + '\n' + str2)
+
 def GenerateVariantsDistributionOld(random_seed_parametr = 0,student_path = 'students.xlsx', structure_path = 'structure.txt'):
     """
     Generate variant distribution with random seed
@@ -12,9 +33,12 @@ def GenerateVariantsDistributionOld(random_seed_parametr = 0,student_path = 'stu
     np.random.seed(random_seed_parametr)
     Students = pd.read_excel(student_path)
     students_number = len(Students)
-    with open(structure_path) as file:
-        Course_structure = list(map(int, file.readline().split()))
-        variants_numbers = list(map(int, file.readline().split()))
+
+    Course_structure, variants_numbers = generate_stracture()
+
+    #with open(structure_path) as file:
+    #    Course_structure = list(map(int, file.readline().split()))
+    #    variants_numbers = list(map(int, file.readline().split()))
 
     Number_of_weaks = len(Course_structure)
 
