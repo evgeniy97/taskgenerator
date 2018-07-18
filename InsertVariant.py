@@ -1,5 +1,5 @@
 from settings import weekPath, baseFile, variantsFile, tasksFile, outputFile
-from Course.week1.LR2DB import Tasks_db
+from BaseNotebooks.LR2DB import Tasks_db
 
 import json
 import os
@@ -58,9 +58,10 @@ class VariantGenerator:
             self.create_notebook(new_notebook, student_path)
 
     def create_notebook(self, new_notebook, notebook_path="test.ipynb"):
-        if not os.path.isfile(notebook_path):
-            print("%s is empty or wrong\n" % notebook_path)
-            exit(1)
+        # Что за проверка? Может наоборот надо
+        #if not os.path.isfile(notebook_path):
+        #    print("%s is empty or wrong\n" % notebook_path)
+        #    exit(1)
         with open(notebook_path, 'w', encoding="utf8") as file:
             s = json.dumps(new_notebook, indent=2, ensure_ascii=False)
             file.write(s)
