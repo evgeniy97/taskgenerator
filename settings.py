@@ -1,6 +1,6 @@
 variantsFile = 'StudentsWithVariants.xlsx'
-weekPath = 'Course/week{}'
+weekPath = ''
 
-outputFile = 'NoteBooks/week{}'
-baseFile = 'LR2.ipynb'
-tasksFile = 'LR2DB.py'
+outputFile = 'NoteBooks/week{0}'
+baseFile = 'BaseNotebooks/{0}.ipynb'
+tasksFile = 'BaseNotebooks/{0}DB.py'

@@ -1,5 +1,5 @@
-from settings import weekPath, baseFile, variantsFile, tasksFile, outputFile
-from BaseNotebooks.LR2DB import Tasks_db
+from settings{2} import weekPath, baseFile, variantsFile, tasksFile, outputFile
+from BaseNotebooks.{2}DB import Tasks_db
 
 import json
 import os

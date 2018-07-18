@@ -23,7 +23,7 @@ def __create_ALL_LR(COURSE_PATH = 'BaseNotebooks'):
     print('Create ' + path + '\All_LR.py')
 
 def __generate_stracture(COURSE_PATH = 'BaseNotebooks'):
-    from BaseNotebooks.All_LR import Tasks_db # TODO удалять этот файл
+    from BaseNotebooks.All_LR import Tasks_db
     tasks_num = []
     var_num = []
 
