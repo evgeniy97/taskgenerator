@@ -3,11 +3,14 @@ We intoduce our TaskGenerator.
 
 TaskGenerator generates JupyterNotebooks.
 
-TaskGenerator helps you to create different notebooks from database you have. You may see structure of database in example.
+TaskGenerator helps you to create different notebooks from database you have.
 
-To use TaskGenerator you shall dowloand this code and in root directory create two directories: 
-  - Course/ :This directory includes some more dirs that must be named as week{}
-  - notebookstructure/ : There are .txt files named week{}.txt that describes structure you wanna see in your notebooks.
-  !!Number os dir in Course MUST BE the same as the number of !!
-  
-  So, some more detailes will be there later...
+To use TaskGenerator you shall dowloand this code and do next:
+- Create BaseNotebooks dir, where you must store your JupyterNotebooks structure and DataBase with tasks. You may see structure of database and JupyterNotebooks in example;
+- Have students.xlsx file with Student column;
+- Run main.py file;
+
+More detailes you may see in the instruction (will be added later)
+
+Made by Diana Vakhrameeva, Evgeniy Khomutov and Alexandra Yakimenko.  
+If you find some bugs or have a quention, please write us, we'll try to answer everyone!
