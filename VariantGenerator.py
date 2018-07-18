@@ -23,15 +23,17 @@ class variantgenerator():
             for i in py_list:
                 source += ("import {0}.{1} as {1}".format(self.COURSE_PATH, i[:-3]) + '\n')
             source += 'Tasks_db = ['
-            for i in py_list:
-
-                source += ("{0}.Tasks_db".format(i[:-3]) + '\n')
-                source += ']'
+            for j, i in enumerate(py_list):
+                source += ("{0}.Tasks_db ".format(i[:-3]))
+                if j != len(py_list) - 1:
+                    source += ','
+            source += ']'
             output_file.write(source)
         print('Create ' + path + '\All_LR.py')
 
     def __generate_stracture(self):
         from BaseNotebooks.All_LR import Tasks_db
+        print('Here')
         tasks_num = []
         var_num = []
 
@@ -55,11 +57,12 @@ class variantgenerator():
         np.random.seed(self.random_seed_parametr)
         try:
             Students = pd.read_excel(self.student_path)
+            print('Load {}'.format(self.student_path))
             students_number = len(Students)
 
             self.__create_ALL_LR()
             Course_structure, variants_numbers = self.__generate_stracture()
-
+            print('Generate stracture')
             Number_of_weaks = len(Course_structure)
 
             number_of_distribution = 0
@@ -70,6 +73,7 @@ class variantgenerator():
                     number_of_distribution += 1
 
             writer = pd.ExcelWriter(self.students_with_variants_path)
+            print('Save {}'.format(self.students_with_variants_path))
             Students.to_excel(writer)
             writer.save()
         except:
