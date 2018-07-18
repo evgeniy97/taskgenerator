@@ -16,13 +16,7 @@ def generate_stracture(COURSE_PATH = ''):
 
     return  tasks_num, var_num
 
-    #str1 = ' '.join(str(i) for i in tasks_num)
-    #str2 = ' '.join(str(i) for i in var_num)
-
-    #with open("structure.txt", 'w', encoding="utf8") as output_file:
-    #    output_file.write(str1 + '\n' + str2)
-
-def GenerateVariantsDistributionOld(random_seed_parametr = 0,student_path = 'students.xlsx', structure_path = 'structure.txt'):
+def __GenerateVariantsDistribution(random_seed_parametr = 0,student_path = 'students.xlsx', structure_path = 'structure.txt'):
     """
     Generate variant distribution with random seed
     :param random_seed_parametr: parametr to np.random.seed
@@ -31,65 +25,26 @@ def GenerateVariantsDistributionOld(random_seed_parametr = 0,student_path = 'stu
     :return: none
     """
     np.random.seed(random_seed_parametr)
-    Students = pd.read_excel(student_path)
-    students_number = len(Students)
-
-    Course_structure, variants_numbers = generate_stracture()
-
-    #with open(structure_path) as file:
-    #    Course_structure = list(map(int, file.readline().split()))
-    #    variants_numbers = list(map(int, file.readline().split()))
-
-    Number_of_weaks = len(Course_structure)
-
-    number_of_distribution = 0
-    for WeakNumber in range(Number_of_weaks):
-        for TaskNumber in range(Course_structure[WeakNumber]):
-            Students['Week {0} Task {1}'.format(WeakNumber + 1, TaskNumber + 1)] = np.random.randint(
-                variants_numbers[number_of_distribution], size=students_number)
-            number_of_distribution += 1
-
-    writer = pd.ExcelWriter('StudentsWithVariants.xlsx')
-    Students.to_excel(writer)
-    writer.save()
-
-def __GenerateVariantsDistribution(
-        list_disrtibution, random_seed_parametr=0, student_path='students.xlsx',
-        students_with_variants_path='StudentsWithVariants.xlsx'):
-    """
-    generate variant distrbution
-    :param list_disrtibution: must be list of list. For example, [[1,2],[1]] shows thaht course has 2 weeks
-    and the first week has 2 tasks with 1 and 2 variants and the second week has 1 task with 1 variants
-    :param random_seed_parametr: parametr to np.random.seed
-    :param student_path: path to students list
-    :param students_with_variants_path: path to students list with variants
-    """
-
-    np.random.seed(random_seed_parametr)
     try:
         Students = pd.read_excel(student_path)
-        # Добавляем столбики в табличку и инициализируем их как None
-        for week_number in range(len(list_disrtibution)):
-            for task_number in range(len(list_disrtibution[week_number])):
-                Students['Week {0} Task {1}'.format(1 + week_number, 1 + task_number)] = None
-        # Делаем распределние одномерным вектором
-        distribution = []
-        for week_dist in list_disrtibution:
-            for i in week_dist:
-                distribution.append(i)
-        for student in Students.get_values():
-            for i in range(1, len(student)):
-                student[i] = np.random.randint(distribution[i - 1])
+        students_number = len(Students)
 
-        writer = pd.ExcelWriter(students_with_variants_path)
+        Course_structure, variants_numbers = generate_stracture()
+
+        Number_of_weaks = len(Course_structure)
+
+        number_of_distribution = 0
+        for WeakNumber in range(Number_of_weaks):
+            for TaskNumber in range(Course_structure[WeakNumber]):
+                Students['Week {0} Task {1}'.format(WeakNumber + 1, TaskNumber + 1)] = np.random.randint(
+                    variants_numbers[number_of_distribution], size=students_number)
+                number_of_distribution += 1
+
+        writer = pd.ExcelWriter('StudentsWithVariants.xlsx')
         Students.to_excel(writer)
         writer.save()
-
-        # TODO Удалять файл structure.txt
     except:
         print('File with students doesnot exist')
-
-
 
 def Check_New_Students(student_path='students.xlsx', students_with_variants_path='StudentsWithVariants.xlsx'):
     try:
@@ -110,7 +65,6 @@ def Check_New_Students(student_path='students.xlsx', students_with_variants_path
 def SortByName(students_with_variants_path='StudentsWithVariants.xlsx'):
     try:
         Students_with_variants = pd.read_excel(students_with_variants_path)
-        Students_with_variants = pd.read_excel(students_with_variants_path)
         Students_with_variants = Students_with_variants.sort_values(by='Student')
         writer = pd.ExcelWriter(students_with_variants_path)
         Students_with_variants.to_excel(writer, index=False)
@@ -119,7 +73,7 @@ def SortByName(students_with_variants_path='StudentsWithVariants.xlsx'):
         print('No Students_with_variants file')
         return None
 
-def GenerateVariantsDistribution(list_disrtibution, random_seed_parametr=0, student_path='students.xlsx',
+def GenerateVariantsDistribution(random_seed_parametr=0, student_path='students.xlsx',
                                  students_with_variants_path='StudentsWithVariants.xlsx' ):
     """
     generate variant distrbution, and sorted it
@@ -130,8 +84,8 @@ def GenerateVariantsDistribution(list_disrtibution, random_seed_parametr=0, stud
     :param students_with_variants_path: path to students list with variants
     """
     if Check_New_Students(student_path, students_with_variants_path):
-        __GenerateVariantsDistribution(list_disrtibution, random_seed_parametr,student_path, students_with_variants_path)
+        __GenerateVariantsDistribution(random_seed_parametr,student_path, students_with_variants_path)
         SortByName()
 if __name__ == '__main__':
-    GenerateVariantsDistributionOld()
+    GenerateVariantsDistribution()
 
