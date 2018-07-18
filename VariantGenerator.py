@@ -1,11 +1,29 @@
 import numpy as np
 import pandas as pd
+import os
 
-def generate_stracture(COURSE_PATH = ''):
+def __create_ALL_LR(COURSE_PATH = 'BaseNotebooks'):
 
-    ## TODO Импортить питоновские файлы грамотно, сделать цикл по всем бд-питоновским файлам
+    path = os.path.join(os.getcwd(), COURSE_PATH)
+    tree = os.walk(path) # tree is a generator, so us next
+    files = next(tree)
+    py_list = [j for j in files[2] if j[-3:] == '.py'] # get only python files
 
-    from BaseNotebooks.All_LR import Tasks_db
+    with open(path + '\All_LR.py', 'w', encoding="utf8") as output_file:
+
+        source = ''
+        for i in py_list:
+            source += ("import {0}.{1} as {1}".format(COURSE_PATH, i[:-3]) + '\n')
+        source += 'Tasks_db = ['
+        for i in py_list:
+
+            source += ("{0}.Tasks_db".format(i[:-3]) + '\n')
+            source += ']'
+        output_file.write(source)
+    print('Create ' + path + '\All_LR.py')
+
+def __generate_stracture(COURSE_PATH = 'BaseNotebooks'):
+    from BaseNotebooks.All_LR import Tasks_db # TODO удалять этот файл
     tasks_num = []
     var_num = []
 
@@ -14,14 +32,17 @@ def generate_stracture(COURSE_PATH = ''):
         for task_key in week.keys():
             var_num.append((len(week[task_key])))
 
+    print('DELETE ' + os.path.join(os.getcwd(), COURSE_PATH) + '\ALL_LR.py')
+    os.remove(os.path.join(os.getcwd(), COURSE_PATH) + '\ALL_LR.py')
+
     return  tasks_num, var_num
 
-def __GenerateVariantsDistribution(random_seed_parametr = 0,student_path = 'students.xlsx', structure_path = 'structure.txt'):
+def __GenerateVariantsDistribution(random_seed_parametr = 0,student_path = 'students.xlsx'
+                                   , students_with_variants_path='StudentsWithVariants.xlsx'):
     """
     Generate variant distribution with random seed
     :param random_seed_parametr: parametr to np.random.seed
     :param student_path: path to students list
-    :param structure_path: path to course structure
     :return: none
     """
     np.random.seed(random_seed_parametr)
@@ -29,7 +50,8 @@ def __GenerateVariantsDistribution(random_seed_parametr = 0,student_path = 'stud
         Students = pd.read_excel(student_path)
         students_number = len(Students)
 
-        Course_structure, variants_numbers = generate_stracture()
+        __create_ALL_LR()
+        Course_structure, variants_numbers = __generate_stracture()
 
         Number_of_weaks = len(Course_structure)
 
@@ -40,7 +62,7 @@ def __GenerateVariantsDistribution(random_seed_parametr = 0,student_path = 'stud
                     variants_numbers[number_of_distribution], size=students_number)
                 number_of_distribution += 1
 
-        writer = pd.ExcelWriter('StudentsWithVariants.xlsx')
+        writer = pd.ExcelWriter(students_with_variants_path)
         Students.to_excel(writer)
         writer.save()
     except:
@@ -77,8 +99,6 @@ def GenerateVariantsDistribution(random_seed_parametr=0, student_path='students.
                                  students_with_variants_path='StudentsWithVariants.xlsx' ):
     """
     generate variant distrbution, and sorted it
-    :param list_disrtibution: must be list of list. For example, [[1,2],[1]] shows thaht course has 2 weeks
-    and the first week has 2 tasks with 1 and 2 variants and the second week has 1 task with 1 variants
     :param random_seed_parametr: parametr to np.random.seed
     :param student_path: path to students list
     :param students_with_variants_path: path to students list with variants
@@ -87,5 +107,6 @@ def GenerateVariantsDistribution(random_seed_parametr=0, student_path='students.
         __GenerateVariantsDistribution(random_seed_parametr,student_path, students_with_variants_path)
         SortByName()
 if __name__ == '__main__':
+    #__generate_stracture()
     GenerateVariantsDistribution()
 
