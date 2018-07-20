@@ -4,13 +4,14 @@ import os
 
 
 class variantgenerator():
-    def __init__(self, seed = 0):
+    def __init__(self, seed=0):
         self.COURSE_PATH = 'BaseNotebooks'
         self.random_seed_parametr = seed
         self.student_path = 'students.xlsx'
         self.students_with_variants_path = 'StudentsWithVariants.xlsx'
 
     def __create_ALL_LR(self):
+
 
         path = os.path.join(os.getcwd(), self.COURSE_PATH)
         tree = os.walk(path) # tree is a generator, so us next
