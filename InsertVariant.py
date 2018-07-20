@@ -1,5 +1,5 @@
-from settings{2} import weekPath, baseFile, variantsFile, tasksFile, outputFile
-from BaseNotebooks.{2}DB import Tasks_db
+from settings import weekPath, baseFile, variantsFile, tasksFile, outputFile
+from importlib import import_module
 
 import json
 import os
@@ -10,13 +10,19 @@ from sympy.abc import x
 
 
 class VariantGenerator:
-    def __init__(self, week_number=1):
+    def __init__(self, week_number=1, BDPath = 'BaseNotebooks.LR2BD'):
+        """"
+        BDPath передавать с точками и без .py
+        """
         self.week_number = week_number
         self.week_path = weekPath.format(self.week_number)
         self.base_path = os.path.join(self.week_path, baseFile)
         self.variants_path = variantsFile
         self.tasks_path = os.path.join(self.week_path, tasksFile)
-        self.task_variants = Tasks_db
+
+        DataBase = import_module(BDPath)
+        self.task_variants = DataBase.Tasks_db
+
         self.output_path = outputFile.format(self.week_number)
 
         if not os.path.exists(self.output_path):

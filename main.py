@@ -1,9 +1,9 @@
 import VariantGenerator
-import ScriptWriter
-
+import InsertVariant
 
 if __name__ == '__main__':
     VariantGenerator.variantgenerator(seed=0).GenerateVariantsDistribution()
-    ScriptWriter.scriptwrite().write()
+    InsertVariant.VariantGenerator(BDPath='BaseNotebooks.LR2DB').insert_tasks()
+
 
 
